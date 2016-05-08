@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# modified on https://github.com/jayphelps/git-blame-someone-else
+
+if [ $# -ne 1 ]; then
+  >&2 echo "Usage: $0 <author>"
+  exit 1
+fi
+
+AUTHOR=$1
+# AUTHOR_NAME=$(echo "$AUTHOR" | perl -wlne '/^(.*)\s*<.*>$/ and print $1')
+AUTHOR_NAME=$(echo "$AUTHOR" | perl -wlne '/^(.*?)\s*<.*>$/ and print $1')
+# AUTHOR_EMAIL=$(echo "$AUTHOR" | perl -wlne '/^.*\s*<(.*)>$/ and print $1')
+AUTHOR_EMAIL=$(echo "$AUTHOR" | perl -wlne '/<(.*?)>$/ and print $1')
+
+CURR_BRANCH=$(git branch | perl -wlne '/^\*\s*(.*)/ and print $1')
+KEEP_FILE="git-green.keep"
+
+{
+  git stash save --keep-index
+  git checkout -b gh-pages
+  git checkout gh-pages
+  git pull
+
+  for i in {1..7}
+  do
+    # CURR_TIME=$(printf "import time\nprint(time.time())" | python)
+    CURR_TIME=$(printf "import time\nprint(int(round(time.time() * 1000)))" | python)
+    echo $CURR_TIME > $KEEP_FILE
+    git add $KEEP_FILE
+
+    # seems not work for the green
+    # GIT_COMMITTER_NAME="$AUTHOR_NAME" GIT_COMMITTER_EMAIL="$AUTHOR_EMAIL" git commit --amend --no-edit --author="$AUTHOR"
+    git commit -m "git-green $CURR_TIME" --author="$AUTHOR"
+  done
+
+  git checkout $CURR_BRANCH
+  git stash apply
+  git push -u origin gh-pages:gh-pages
+# } &> /dev/null
+}
+
+echo "$AUTHOR_NAME is now being greened. You're officially an asshole.";
