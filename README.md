@@ -8,7 +8,7 @@ $ git green "Jayin Ton <tonjayin@gmail.com>"
 ### Installation
 
 ```plain
-$ curl https://fritx.github.io/git-green-someone-else/install.sh | bash
+$ curl -s https://raw.githubusercontent.com/fritx/git-green-someone-else/master/install.sh | bash
 ```
 
 
@@ -18,7 +18,7 @@ $ curl https://fritx.github.io/git-green-someone-else/install.sh | bash
 - [ ] git ungreen someone
 - [ ] github id
 - [ ] commit dates
-- [ ] wget installing
+- [x] install via curl
 - [ ] more..
 
 
