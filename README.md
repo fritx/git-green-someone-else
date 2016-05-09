@@ -5,6 +5,11 @@ $ cd your/project
 $ git green "Jayin Ton <tonjayin@gmail.com>"
 ```
 
+> Someone will be pushing to your repo being "greened" and then getting mad at you.
+
+<img width="209" height="167" src="QQ20160510-1.png" />
+
+
 ### Installation
 
 ```plain
