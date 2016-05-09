@@ -18,6 +18,7 @@ KEEP_FILE="git-green.keep"
 {
   git stash save --keep-index
   git checkout -b gh-pages origin/gh-pages
+  git checkout -b gh-pages
   git checkout gh-pages
   git pull origin gh-pages
 
